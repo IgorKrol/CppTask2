@@ -1,33 +1,44 @@
 #include <iostream>
 
 namespace ariel{
+
+	class Node{
+	public:
+		int key;
+		Node* p;
+		Node* l;
+		Node* r;
+
+
+		~Node(){
+			if(l!=NULL){
+				delete(l);
+			} 
+			if(r!=NULL){ 
+				delete(r);
+			} 
+		}
+
+		Node(int k, Node* n=NULL);
+		Node* search(int i);
+		int size();
+		void print();
+	};
 	class Tree
 	{
-		int key;
-		Tree* p;
-		Tree* l;
-		Tree* r;
+		Node* Root;
 
 	public:
 		Tree();
 		~Tree(){
-			if (this != NULL) { 
-				this->l->print(); 
-				this->r->print();
-				delete(this);
+			if(Root!=NULL){
+				delete(Root);
 			}
 		}
 		Tree(int k);
 		Tree(int k, Tree* n);
-		int getK(){return key;}
-		Tree* getL(){return l;}
-		Tree* getR(){return r;}
-		Tree* getP(){return p;}
-		void setL(Tree* left){l=left;}
-		void setR(Tree* right){r=right;}
-		void setP(Tree* parent){p=parent;}
 
-		Tree* search(int i);
+		Node* search(int i);
 		Tree& insert(int i);
 		void remove(int i);
 		int size();

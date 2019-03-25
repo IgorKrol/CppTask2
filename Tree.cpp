@@ -2,87 +2,109 @@
 #include "Tree.hpp"
 using namespace ariel;
 
-Tree::Tree(){}
-Tree::Tree(int k){
+Node::Node(int k, Node* n){
 	key=k;
 	l=NULL;
-	r=NULL; 
-	p=NULL;
-}
-Tree::Tree(int k, Tree* n){
-	key=k;
-	l=NULL;
-	r=NULL; 
+	r=NULL;
 	p=n;
 }
+
+Node* Node::search(int i){
+	Node* tNode = this;
+	if (tNode->key==i){
+		return tNode;
+	}
+	else{
+		if(tNode->key>i){
+			if (tNode->l==NULL){ return tNode; }
+			return tNode->l->search(i);
+		}
+		else{
+			if (tNode->r==NULL){ return tNode; }
+			return tNode->r->search(i);
+		}
+	}
+}
+
+int Node::size(){
+	Node* node = this;
+	if (node == NULL)  
+		return 0;  
+	else
+		return(node->l->size() + 1 + node->r->size()); 
+}
+
+void Node::print(){
+	if(this->l!=NULL){
+		this->l->print();
+	} 
+	printf("[%d],", this->key);
+	if(this->r!=NULL){ 
+		this->r->print();
+	} 
+}
+
+Tree::Tree(){
+	Root = NULL;
+}
+
 /** this function search for key=i
 	if found -> return Tree* for him
 	if not found -> return NULL pointer where he should have been.*/
-Tree* Tree::search(int i){
-	// if (this==NULL){
-	// 	return this;
-	// }
-	Tree* node = this;
-	if (node->key==i){
-		return node;
+Node* Tree::search(int i){
+	if (Root==NULL){
+		return Root;
 	}
 	else{
-		if(node->key>i){
-			if (node->l==NULL){ return node; }
-			return node->l->search(i);
-		}
-		else{
-			if (node->r==NULL){ return node; }
-			return node->r->search(i);
-		}
+		return Root->search(i);
 	}
 }
 
 /* this function inserts int i as data to BST, if i exists, error will accure */
 Tree& Tree::insert(int i){
-	Tree* node = this->search(i);
-	try{
-		if (node == NULL){
-			node = new Tree(i);
-		}
-		else{
-			if (node->key==i){ throw(i); }
+	if (Root == NULL){
+		Root = new Node(i);
+	}
+	else{
+		Node* tNode = this->search(i);
+		try{
+			if (tNode->key==i){ throw(i); }
 			else{
-				if (node->key>i){
-					node->l=new Tree(i,node);
+				if (tNode->key>i){
+					tNode->l=new Node(i,tNode);
 				}
 				else{
-					node->l=new Tree(i,node);
+					tNode->r=new Node(i,tNode);
 				}
 			}
 		}
-	}
-	catch(int i){
-		std::cerr<<"Integer "<<i<<" already exists"<<std::endl;
+		catch(int i){
+			std::cerr<<"Integer "<<i<<" already exists"<<std::endl;
+		}
 	}
 	return *this;
 }
 
 void Tree::remove(int i){
-	Tree* node = this->search(i);
+	Node* tNode = this->search(i);
 	try{
 		// didnt find i
-		if (node == NULL){
+		if (tNode == NULL){
 			throw(i);
 		}
-		if (node->key!=i){
+		if (tNode->key!=i){
 			throw(i);
 		}
-		// node->key==i
+		// tNode->key==i
 		else{
-			if (node->l == NULL){
-				node->p->r=node->r;
-				delete(node);
+			if (tNode->l == NULL){
+				tNode->p->r=tNode->r;
+				delete(tNode);
 			}
 			else{
 				//search to get max value in left tree -> switch and remove
-				Tree* temp = node->l->search(i);
-				node->key = temp->key;
+				Node* temp = tNode->l->search(i);
+				tNode->key = temp->key;
 				delete(temp);
 			}
 		}
@@ -93,17 +115,12 @@ void Tree::remove(int i){
 }
 
 int Tree::size(){ 
-	Tree* node = this;
-	if (node == NULL)  
-		return 0;  
-	else
-		return(node->l->size() + 1 + node->r->size());  
+	return this->Root->size();
 }
 
 bool Tree::contains(int i){
-	Tree* temp = this;
-	Tree* node = temp->search(i);
-	if (node->key==i){
+	Node* tNode = this->search(i);
+	if (tNode->key==i){
 		return true;
 	}
 	else{
@@ -117,7 +134,7 @@ int Tree::root(){
 			throw(0);
 		}
 		else{
-			return this->key;
+			return this->Root->key;
 		}
 	}
 	catch(int i){
@@ -127,11 +144,11 @@ int Tree::root(){
 }
 
 int Tree::parent(int i){
-	Tree* temp = this;
-	Tree* node = temp->search(i);
+
 	try{
-		if (node->key==i){
-			return node->p->key;
+		Node* tNode = this->search(i);
+		if (tNode->key==i){
+			return tNode->p->key;
 		}
 		else{
 			throw(i);
@@ -143,11 +160,10 @@ int Tree::parent(int i){
 	return 0;
 }
 int Tree::left(int i){
-	Tree* temp = this;
-	Tree* node = temp->search(i);
+	Node* tNode = this->search(i);
 	try{
-		if (node->key==i){
-			return node->l->key;
+		if (tNode->key==i){
+			return tNode->l->key;
 		}
 		else{
 			throw(i);
@@ -159,11 +175,10 @@ int Tree::left(int i){
 	return 0;
 }
 int Tree::right(int i){
-	Tree* temp = this;
-	Tree* node = temp->search(i);
+	Node* tNode = this->search(i);
 	try{
-		if (node->key==i){
-			return node->r->key;
+		if (tNode->key==i){
+			return tNode->r->key;
 		}
 		else{
 			throw(i);
@@ -176,9 +191,7 @@ int Tree::right(int i){
 }
 
 void Tree::print(){
-	if (this != NULL) { 
-        this->l->print(); 
-        printf("[%d],", this->key); 
-        this->r->print(); 
-    }
+	if(Root != NULL){
+		Root->print();
+	}
 }
