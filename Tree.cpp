@@ -63,9 +63,11 @@ Node* Tree::search(int i){
 /* this function inserts int i ass data to BST, if i exists, error will accure */
 Tree& Tree::insert(int i){
 	if (Root == NULL){
+		std::cout<<"problem?"<<std::endl;
 		Root = new Node(i);
 	}
 	else{
+		std::cout<<"problem2?"<<std::endl;
 		Node* tNode = this->search(i);
 		try{
 			if (tNode->key==i){ throw(i); }
