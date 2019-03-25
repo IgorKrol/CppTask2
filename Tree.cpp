@@ -60,7 +60,7 @@ Node* Tree::search(int i){
 	}
 }
 
-/* this function inserts int i as data to BST, if i exists, error will accure */
+/* this function inserts int i ass data to BST, if i exists, error will accure */
 Tree& Tree::insert(int i){
 	if (Root == NULL){
 		Root = new Node(i);
@@ -80,6 +80,9 @@ Tree& Tree::insert(int i){
 		}
 		catch(int i){
 			std::cerr<<"Integer "<<i<<" already exists"<<std::endl;
+		}
+		catch(...){
+			std::cerr<<"ERROR:INSERT"<<std::endl;
 		}
 	}
 	return *this;
@@ -112,6 +115,9 @@ void Tree::remove(int i){
 	catch (int i){
 		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
 	}
+	catch(...){
+			std::cerr<<"ERROR:REMOVE"<<std::endl;
+		}
 }
 
 int Tree::size(){ 
@@ -140,6 +146,9 @@ int Tree::root(){
 	catch(int i){
 		std::cerr<<"Root doesnt have value"<<std::endl;
 	}
+	catch(...){
+			std::cerr<<"ERROR:ROOT"<<std::endl;
+		}
 	return 0;
 }
 
@@ -157,6 +166,9 @@ int Tree::parent(int i){
 	catch(int i){
 		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
 	}
+	catch(...){
+			std::cerr<<"ERROR:PARENT"<<std::endl;
+		}
 	return 0;
 }
 int Tree::left(int i){
@@ -172,6 +184,9 @@ int Tree::left(int i){
 	catch(int i){
 		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
 	}
+	catch(...){
+			std::cerr<<"ERROR:LEFT"<<std::endl;
+		}
 	return 0;
 }
 int Tree::right(int i){
@@ -187,6 +202,9 @@ int Tree::right(int i){
 	catch(int i){
 		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
 	}
+	catch(...){
+			std::cerr<<"ERROR:RIGHT"<<std::endl;
+		}
 	return 0;
 }
 
