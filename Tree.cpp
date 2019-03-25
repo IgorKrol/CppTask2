@@ -123,6 +123,9 @@ void Tree::remove(int i){
 }
 
 int Tree::size(){ 
+	if (this->Root==NULL){
+		return 0;
+	}
 	return this->Root->size();
 }
 
