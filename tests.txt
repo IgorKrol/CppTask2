@@ -1,0 +1,136 @@
+#include <iostream>
+#include "Tree.hpp"
+using namespace ariel;
+
+Tree::Tree(){}
+Tree::Tree(int k){
+	key=k;
+	l=NULL;
+	r=NULL; 
+	p=NULL;
+}
+
+Tree* Tree::search(int i){
+	Tree* temp = this;
+	bool foundIt = false;
+	while(!foundIt){
+		int data = temp->getK();
+		if (data == i){
+			foundIt=true;
+			return temp;
+		}
+		if (data > i){
+			if (temp->l == NULL){
+				foundIt=true;
+			}
+			else{
+				temp=this->l;
+			}
+		}
+		else{
+			if (temp->r == NULL){
+				foundIt=true;
+			}
+			else{
+				temp=this->r;
+			}
+		}
+	}
+	return temp;
+}
+
+/* this function inserts int i as data to BST, if i exists, error will accure */
+Tree& Tree::insert(int i){
+	Tree* node = this->search(i);
+	if (node->key == i){
+		//error
+	}
+	else{
+		if (node->key > i){
+			node->l = new Tree(i);
+		}
+		else{
+			node->r = new Tree(i);
+		}
+	}
+	return *this;
+}
+
+void Tree::remove(int i){
+	Tree* node = temp->search(i);
+	try{
+		if (node->key == i){
+			bool done=false;
+			int tempkey;
+			while(!done)(
+				if (node->l == NULL && node->r == NULL){
+					
+				}
+				)
+		}
+	else{
+		throw i;
+	}
+}
+catch (int i){
+	std::cerr<<"Integer"<<i<<"doesnt exists"<<endl;
+}
+}
+
+int Tree::size(){ 
+	Tree* node = this;
+	if (node == NULL)  
+		return 0;  
+	else
+		return(size(node->l) + 1 + size(node->r));  
+}
+
+bool Tree::contains(int i){
+	Tree* temp = this;
+	Tree* node = temp.search(i);
+	if (node->key==i){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+int Tree::root(){
+	return this->key;
+}
+
+int Tree::parent(int i){
+	Tree* temp = this;
+	Tree* node = temp.search(i);
+	if (node->key==i){
+		return node->parent;
+	}
+	else{
+		//error
+	}
+}
+int Tree::left(int i){
+	Tree* temp = this;
+	Tree* node = temp.search(i);
+	if (node->key==i){
+		return node->l;
+	}
+	else{
+		//error
+	}
+}
+int Tree::right(int i){
+	Tree* temp = this;
+	Tree* node = temp.search(i);
+	if (node->key==i){
+		return node->r;
+	}
+	else{
+		//error
+	}
+}
+
+void Tree::print(){
+
+}
