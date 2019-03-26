@@ -38,7 +38,7 @@ void Node::print(){
 	if(this->l!=NULL){
 		this->l->print();
 	} 
-	printf("[%d],", this->key);
+	printf("[%d]", this->key);
 	if(this->r!=NULL){ 
 		this->r->print();
 	} 
@@ -62,7 +62,6 @@ Node* Tree::search(int i){
 
 /* this function inserts int i ass data to BST, if i exists, error will accure */
 Tree& Tree::insert(int i){
-	std::cerr<<"Insert"<<i<<std::endl;
 	if (Root == NULL){
 		Root = new Node(i);
 	}
@@ -81,9 +80,11 @@ Tree& Tree::insert(int i){
 		}
 		catch(int i){
 			std::cerr<<"Integer "<<i<<" already exists"<<std::endl;
+			throw;
 		}
 		catch(...){
 			std::cerr<<"ERROR:INSERT"<<std::endl;
+			throw;
 		}
 	}
 	return *this;
@@ -115,9 +116,11 @@ void Tree::remove(int i){
 	}
 	catch (int i){
 		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
+		throw;
 	}
 	catch(...){
 		std::cerr<<"ERROR:REMOVE"<<std::endl;
+		throw;
 	}
 }
 
@@ -155,9 +158,11 @@ int Tree::root(){
 	}
 	catch(int i){
 		std::cerr<<"Root doesnt have value"<<std::endl;
+		throw;
 	}
 	catch(...){
 		std::cerr<<"ERROR:ROOT"<<std::endl;
+		throw;
 	}
 	return 0;
 }
@@ -182,9 +187,11 @@ int Tree::parent(int i){
 	}
 	catch(int i){
 		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
+		throw;
 	}
 	catch(...){
 		std::cerr<<"ERROR:PARENT"<<std::endl;
+		throw;
 	}
 	return 0;
 }
@@ -203,9 +210,11 @@ int Tree::left(int i){
 	}
 	catch(int i){
 		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
+		throw;
 	}
 	catch(...){
 		std::cerr<<"ERROR:LEFT"<<std::endl;
+		throw;
 	}
 	return 0;
 }
@@ -224,9 +233,11 @@ int Tree::right(int i){
 	}
 	catch(int i){
 		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
+		throw;
 	}
 	catch(...){
 		std::cerr<<"ERROR:RIGHT"<<std::endl;
+		throw;
 	}
 	return 0;
 }
