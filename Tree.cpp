@@ -117,8 +117,8 @@ void Tree::remove(int i){
 		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
 	}
 	catch(...){
-			std::cerr<<"ERROR:REMOVE"<<std::endl;
-		}
+		std::cerr<<"ERROR:REMOVE"<<std::endl;
+	}
 }
 
 int Tree::size(){ 
@@ -129,6 +129,9 @@ int Tree::size(){
 }
 
 bool Tree::contains(int i){
+	if(Root==NULL){
+		return false;
+	}
 	Node* tNode = this->search(i);
 	if (tNode->key==i){
 		return true;
@@ -139,6 +142,9 @@ bool Tree::contains(int i){
 }
 
 int Tree::root(){
+	if (Root==NULL){
+		throw(0);
+	}
 	try{
 		if (this->size() == 0){
 			throw(0);
@@ -151,17 +157,24 @@ int Tree::root(){
 		std::cerr<<"Root doesnt have value"<<std::endl;
 	}
 	catch(...){
-			std::cerr<<"ERROR:ROOT"<<std::endl;
-		}
+		std::cerr<<"ERROR:ROOT"<<std::endl;
+	}
 	return 0;
 }
 
 int Tree::parent(int i){
-
+	if (Root==NULL){
+		throw(i);
+	}
 	try{
 		Node* tNode = this->search(i);
 		if (tNode->key==i){
-			return tNode->p->key;
+			if(tNode->p==NULL){
+				throw(i);
+			}
+			else{
+				return tNode->p->key;
+			}
 		}
 		else{
 			throw(i);
@@ -171,11 +184,14 @@ int Tree::parent(int i){
 		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
 	}
 	catch(...){
-			std::cerr<<"ERROR:PARENT"<<std::endl;
-		}
+		std::cerr<<"ERROR:PARENT"<<std::endl;
+	}
 	return 0;
 }
 int Tree::left(int i){
+	if (Root==NULL){
+		throw(i);
+	}
 	Node* tNode = this->search(i);
 	try{
 		if (tNode->key==i){
@@ -189,11 +205,14 @@ int Tree::left(int i){
 		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
 	}
 	catch(...){
-			std::cerr<<"ERROR:LEFT"<<std::endl;
-		}
+		std::cerr<<"ERROR:LEFT"<<std::endl;
+	}
 	return 0;
 }
 int Tree::right(int i){
+	if (Root==NULL){
+		throw(i);
+	}
 	Node* tNode = this->search(i);
 	try{
 		if (tNode->key==i){
@@ -207,8 +226,8 @@ int Tree::right(int i){
 		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
 	}
 	catch(...){
-			std::cerr<<"ERROR:RIGHT"<<std::endl;
-		}
+		std::cerr<<"ERROR:RIGHT"<<std::endl;
+	}
 	return 0;
 }
 
