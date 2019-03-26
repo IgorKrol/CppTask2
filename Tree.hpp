@@ -10,19 +10,12 @@ namespace ariel{
 		Node* r;
 
 
-		~Node(){
-			if(l!=NULL){
-				delete(l);
-			} 
-			if(r!=NULL){ 
-				delete(r);
-			} 
-		}
+		~Node();
 
 		Node(int k, Node* n=NULL);
 		Node* search(int i);
 		int size();
-		void print();
+		void printNode(Node* n);
 	};
 	class Tree
 	{
