@@ -1,6 +1,10 @@
 #include <iostream>
 #include "Tree.hpp"
+#include <cmath>
+#include <cassert>
+#include <string>
 using namespace ariel;
+using namespace std;
 /**
  * Node initiator: 
  * k=key value
@@ -16,15 +20,13 @@ Node::Node(int k, Node* n){
  * Destractor
  */ 
 Node::~Node(){
-	if(l!=NULL){
-		delete(l);
-	} 
-	if(r!=NULL){ 
-		delete(r);
-	}
-	p=NULL;	
-	free(this);
-	}
+	delete(l);
+	l=NULL;
+	delete(r);
+	r=NULL;
+	p=NULL;
+	// delete(p);
+}
 
 /**
  * search i value as Recurtion
@@ -61,13 +63,14 @@ int Node::size(){
  * print function for nodes: inc order
  */ 
 void Node::printNode(Node* n){
+	
 	if(n->l!=NULL){
 		printNode(n->l);
 	} 
 	if(n!=NULL){
-	printf("[%d]", n->key);
+		std::cout<<"["<<n->key<<"]"<<std::endl;
 	}
-	if(n->r!=NULL){ 
+	if(n->r!=NULL){
 		printNode(n->r);
 	} 
 }
@@ -95,27 +98,23 @@ Node* Tree::search(int i){
 Tree& Tree::insert(int i){
 	if (Root == NULL){
 		Root = new Node(i);
+		Root->p=Root;
 	}
 	else{
 		Node* tNode = this->search(i);
-		try{
-			if (tNode->key==i){ throw(i); }
-			else{
-				if (tNode->key>i){
-					tNode->l=new Node(i,tNode);
-				}
-				else{
-					tNode->r=new Node(i,tNode);
-				}
+
+		if (tNode->key==i){ 
+			throw string("ERROR(INSERT):Integer "+to_string(i)+" already exists"); 
+		}
+		else{
+			if (tNode->key>i){
+				tNode->l=new Node(i,tNode);
+				tNode=tNode->l;
 			}
-		}
-		catch(int i){
-			std::cerr<<"Integer "<<i<<" already exists"<<std::endl;
-			throw;
-		}
-		catch(...){
-			std::cerr<<"ERROR:INSERT"<<std::endl;
-			throw;
+			else{
+				tNode->r=new Node(i,tNode);
+				tNode=tNode->r;
+			}
 		}
 	}
 	return *this;
@@ -126,42 +125,16 @@ Tree& Tree::insert(int i){
  */ 
 void Tree::remove(int i){
 	if (Root == NULL){
-		throw(i);
+		throw string("ERROR(REMOVE):Tree is Empty"); ;
 	}
 	Node* tNode = this->search(i);
-	try{
-		// didnt find i
-		if (tNode->key!=i){
-			throw(i);
-		}
-		// tNode->key==i
-		else{
-			if(tNode->l==NULL && tNode->r==NULL){
-
-			}
-			else{
-				if(tNode->l!=NULL){
-					Node* temp = tNode->l->search(i);
-					std::cout<<i<<": Node.Key="<<temp->key<<" ,tNode-key="<<tNode->key<<std::endl;
-					tNode->key = temp->key;
-					delete(temp);
-				}
-				else{
-					Node* temp = tNode->r->search(i);
-					std::cout<<i<<": Node.Key="<<temp->key<<" ,tNode-key="<<tNode->key<<std::endl;
-					tNode->key = temp->key;
-					delete(temp);
-				}
-			}
-		}
+	// didnt find i
+	if (tNode->key!=i){
+		throw string("ERROR(REMOVE):Integer "+to_string(i)+" doesnt exists"); ;
 	}
-	catch (int i){
-		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
-		throw;
-	}
-	catch(...){
-		std::cerr<<"ERROR:REMOVE"<<std::endl;
-		throw;
+	// tNode->key==i
+	else{
+		
 	}
 }
 /**
@@ -194,23 +167,14 @@ bool Tree::contains(int i){
  */
 int Tree::root(){
 	if (Root==NULL){
-		throw(0);
+		throw string("ERROR(ROOT):Tree is empty"); 
 	}
-	try{
-		if (this->size() == 0){
-			throw(0);
-		}
-		else{
-			return this->Root->key;
-		}
+
+	if (this->size() == 0){
+		throw string("ERROR(ROOT):Tree is empty"); 
 	}
-	catch(int i){
-		std::cerr<<"Root doesnt have value"<<std::endl;
-		throw;
-	}
-	catch(...){
-		std::cerr<<"ERROR:ROOT"<<std::endl;
-		throw;
+	else{
+		return this->Root->key;
 	}
 	return 0;
 }
@@ -219,29 +183,19 @@ int Tree::root(){
  */
 int Tree::parent(int i){
 	if (Root==NULL){
-		throw(i);
+		throw string("ERROR(PARENT):Tree is empty"); 
 	}
-	try{
-		Node* tNode = this->search(i);
-		if (tNode->key==i){
-			if(tNode->p==NULL){
-				throw(i);
-			}
-			else{
-				return tNode->p->key;
-			}
+	Node* tNode = this->search(i);
+	if (tNode->key==i){
+		if(tNode->p==NULL){
+			throw string("ERROR(PARENT):Integer "+to_string(i)+" doesnt exists"); 
 		}
 		else{
-			throw(i);
+			return tNode->p->key;
 		}
 	}
-	catch(int i){
-		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
-		throw;
-	}
-	catch(...){
-		std::cerr<<"ERROR:PARENT"<<std::endl;
-		throw;
+	else{
+		throw string("ERROR(PARENT):Integer "+to_string(i)+" doesnt exists");
 	}
 	return 0;
 }
@@ -250,24 +204,14 @@ int Tree::parent(int i){
  */
 int Tree::left(int i){
 	if (Root==NULL){
-		throw(i);
+		throw string("ERROR(LEFT):Tree is empty");
 	}
 	Node* tNode = this->search(i);
-	try{
-		if (tNode->key==i){
-			return tNode->l->key;
-		}
-		else{
-			throw(i);
-		}
+	if (tNode->key==i){
+		return tNode->l->key;
 	}
-	catch(int i){
-		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
-		throw;
-	}
-	catch(...){
-		std::cerr<<"ERROR:LEFT"<<std::endl;
-		throw;
+	else{
+		throw string("ERROR(LEFT):Integer "+to_string(i)+" doesnt exists");;
 	}
 	return 0;
 }
@@ -276,24 +220,15 @@ int Tree::left(int i){
  */
 int Tree::right(int i){
 	if (Root==NULL){
-		throw(i);
+		throw string("ERROR(RIGHT):Tree is empty");
 	}
 	Node* tNode = this->search(i);
-	try{
-		if (tNode->key==i){
-			return tNode->r->key;
-		}
-		else{
-			throw(i);
-		}
+
+	if (tNode->key==i){
+		return tNode->r->key;
 	}
-	catch(int i){
-		std::cerr<<"Integer "<<i<<" doesnt exists"<<std::endl;
-		throw;
-	}
-	catch(...){
-		std::cerr<<"ERROR:RIGHT"<<std::endl;
-		throw;
+	else{
+		throw string("ERROR(RIGHT):Integer "+to_string(i)+" doesnt exists");
 	}
 	return 0;
 }
@@ -303,7 +238,6 @@ int Tree::right(int i){
 void Tree::print(){
 	if(Root != NULL){
 		Root->printNode(Root);
-		printf("\n");
 	}
 
 }
