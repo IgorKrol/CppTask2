@@ -134,7 +134,38 @@ void Tree::remove(int i){
 	}
 	// tNode->key==i
 	else{
-		
+		// if (this->size()==1){
+		// 	delete(Root);
+		// 	Root=NULL;
+		// }
+		// if(tNode->l!=NULL){
+		// 	Node* temp = tNode->l->search(i);
+		// 	Node* pNode = temp->p;
+		// 	// std::cout<<i<<": Node.Key="<<temp->key<<" ,tNode-key="<<tNode->key<<std::endl;
+		// 	tNode->key = temp->key;
+		// 	delete(temp);
+		// 	if(pNode->l==temp){
+		// 		pNode->l=NULL;
+		// 	}
+		// 	else{
+		// 		pNode->r=NULL;
+		// 	}
+		// }
+		// else{
+		// 	if(tNode->r!=NULL){
+		// 		Node* temp = tNode->l->search(i);
+		// 	Node* pNode = temp->p;
+		// 	// std::cout<<i<<": Node.Key="<<temp->key<<" ,tNode-key="<<tNode->key<<std::endl;
+		// 	tNode->key = temp->key;
+		// 	delete(temp);
+		// 	if(pNode->l==temp){
+		// 		pNode->l=NULL;
+		// 	}
+		// 	else{
+		// 		pNode->r=NULL;
+		// 	}
+		// 	}
+		// }
 	}
 }
 /**
