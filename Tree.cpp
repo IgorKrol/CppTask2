@@ -149,7 +149,8 @@ void Tree::remove(int i){
 			cNode = tNode->r->search(i);
 			tNode->key = cNode->key;
 			if(cNode->p==tNode){
-				cNode->p->r=NULL;
+				cNode->p->r=cNode->r;
+				cNode->r=NULL;
 			}else{
 				cNode->p->l=NULL;	
 			}
@@ -162,7 +163,8 @@ void Tree::remove(int i){
 			cNode = tNode->l->search(i);
 			tNode->key = cNode->key;
 			if(cNode->p==tNode){
-				cNode->p->l=NULL;
+				cNode->p->l=cNode->l;
+				cNode->l=NULL;
 			}else{
 				cNode->p->r=NULL;	
 			}
