@@ -97,6 +97,7 @@ Node* Tree::search(int i){
 /* this function inserts int i ass data to BST, if i exists, error will accure */
 Tree& Tree::insert(int i){
 	if (Root == NULL){
+
 		Root = new Node(i);
 		Root->p=Root;
 	}
@@ -124,48 +125,64 @@ Tree& Tree::insert(int i){
  * if doesnt exits, throws error
  */ 
 void Tree::remove(int i){
-	if (Root == NULL){
-		throw string("ERROR(REMOVE):Tree is Empty"); ;
+	if (Root == NULL || Root->size()==0){
+		throw string("ERROR(REMOVE):Tree is Empty");
+		return;
 	}
 	Node* tNode = this->search(i);
 	// didnt find i
 	if (tNode->key!=i){
-		throw string("ERROR(REMOVE):Integer "+to_string(i)+" doesnt exists"); ;
+		throw string("ERROR(REMOVE):Integer "+to_string(i)+" doesnt exists");
+		return;
 	}
 	// tNode->key==i
 	else{
-		// if (this->size()==1){
-		// 	delete(Root);
-		// 	Root=NULL;
-		// }
-		// if(tNode->l!=NULL){
-		// 	Node* temp = tNode->l->search(i);
-		// 	Node* pNode = temp->p;
-		// 	// std::cout<<i<<": Node.Key="<<temp->key<<" ,tNode-key="<<tNode->key<<std::endl;
-		// 	tNode->key = temp->key;
-		// 	delete(temp);
-		// 	if(pNode->l==temp){
-		// 		pNode->l=NULL;
-		// 	}
-		// 	else{
-		// 		pNode->r=NULL;
-		// 	}
-		// }
-		// else{
-		// 	if(tNode->r!=NULL){
-		// 		Node* temp = tNode->l->search(i);
-		// 	Node* pNode = temp->p;
-		// 	// std::cout<<i<<": Node.Key="<<temp->key<<" ,tNode-key="<<tNode->key<<std::endl;
-		// 	tNode->key = temp->key;
-		// 	delete(temp);
-		// 	if(pNode->l==temp){
-		// 		pNode->l=NULL;
-		// 	}
-		// 	else{
-		// 		pNode->r=NULL;
-		// 	}
-		// 	}
-		// }
+		if(tNode==Root){
+			// cout<<"here "<<i<<endl;
+			delete(Root);
+			Root=NULL;
+			return;
+		}
+		Node* cNode;
+		//tNode switch with right side
+		if (tNode->r!=NULL){
+			cNode = tNode->r->search(i);
+			tNode->key = cNode->key;
+			if(cNode->p==tNode){
+				cNode->p->r=NULL;
+			}else{
+				cNode->p->l=NULL;	
+			}
+			
+			delete(cNode);
+		}
+		//tNode switch with left side
+		else{
+			if(tNode->l!=NULL){
+			cNode = tNode->l->search(i);
+			tNode->key = cNode->key;
+			if(cNode->p==tNode){
+				cNode->p->l=NULL;
+			}else{
+				cNode->p->r=NULL;	
+			}
+			// cout<<cNode->key<<"+"<<cNode->l<<"+"<<cNode->r<<"+"<<cNode->p<<endl;
+			delete(cNode);
+			}
+			//tNode is a leaf
+			else
+			{
+				if(tNode->p->r==tNode){
+					tNode->p->r=NULL;
+				}
+				else{
+					tNode->p->l=NULL;
+					
+				}
+				delete(tNode);
+			}
+			
+		}
 	}
 }
 /**
