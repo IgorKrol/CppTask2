@@ -292,7 +292,7 @@ int Tree::root(){
  * returns parent value
  */
 int Tree::parent(int i){
-	cout<<"parent"<<endl;
+	cout<<"parent"<<i<<endl;
 	if (Root==NULL){
 		throw string("ERROR(PARENT):Tree is empty"); 
 	}
@@ -314,7 +314,7 @@ int Tree::parent(int i){
  * returns left value
  */
 int Tree::left(int i){
-	cout<<"left"<<endl;
+	cout<<"left"<<i<<endl;
 	if (Root==NULL){
 		throw string("ERROR(LEFT):Tree is empty");
 	}
@@ -331,7 +331,7 @@ int Tree::left(int i){
  * returns right value
  */
 int Tree::right(int i){
-	cout<<"right"<<endl;
+	cout<<"right"<<i<<endl;
 	if (Root==NULL){
 		throw string("ERROR(RIGHT):Tree is empty");
 	}
