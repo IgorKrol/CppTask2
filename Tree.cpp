@@ -279,7 +279,6 @@ int Tree::root(){
 	if (Root==NULL){
 		throw string("ERROR(ROOT):Tree is empty"); 
 	}
-
 	if (this->size() == 0){
 		throw string("ERROR(ROOT):Tree is empty"); 
 	}
@@ -298,7 +297,7 @@ int Tree::parent(int i){
 	}
 	Node* tNode = this->search(i);
 	if (tNode->key==i){
-		if(tNode->p==NULL){
+		if(tNode->p==NULL || tNode->p==tNode){
 			throw string("ERROR(PARENT):Integer "+to_string(i)+" doesnt have parent"); 
 		}
 		else{
