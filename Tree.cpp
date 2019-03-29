@@ -134,7 +134,7 @@ Tree& Tree::insert(int i){
  * if doesnt exits, throws error
  */ 
 void Tree::remove(int i){
-	print();
+	// print();
 	// cout<<"remove "<<i<<endl;
 	if (Root == NULL || Root->size()==0){
 		throw string("ERROR(REMOVE):Tree is Empty");
