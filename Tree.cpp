@@ -41,6 +41,7 @@ Node::~Node(){
  * if doesnt exist returns parent node for i
  * */
 Node* Node::search(int i){
+	cout<<"search "<<i<<endl;
 	Node* tNode = this;
 	if (tNode->key==i){
 		return tNode;
@@ -103,6 +104,7 @@ Node* Tree::search(int i){
 
 /* this function inserts int i ass data to BST, if i exists, error will accure */
 Tree& Tree::insert(int i){
+	cout<<"insert "<<i<<endl;
 	if (Root == NULL){
 
 		Root = new Node(i);
@@ -246,6 +248,7 @@ void Tree::remove(int i){
  * returns tree size
  */ 
 int Tree::size(){ 
+	cout<<"size"<<endl;
 	if (this->Root==NULL){
 		return 0;
 	}
@@ -256,6 +259,7 @@ int Tree::size(){
  * checks if tree contains value i
  */ 
 bool Tree::contains(int i){
+	cout<<"contains "<<i<<endl;
 	if(Root==NULL){
 		return false;
 	}
@@ -271,6 +275,7 @@ bool Tree::contains(int i){
  * returns root value
  */
 int Tree::root(){
+	cout<<"root "<<endl;
 	if (Root==NULL){
 		throw string("ERROR(ROOT):Tree is empty"); 
 	}
@@ -287,6 +292,7 @@ int Tree::root(){
  * returns parent value
  */
 int Tree::parent(int i){
+	cout<<"parent"<<endl;
 	if (Root==NULL){
 		throw string("ERROR(PARENT):Tree is empty"); 
 	}
@@ -308,6 +314,7 @@ int Tree::parent(int i){
  * returns left value
  */
 int Tree::left(int i){
+	cout<<"left"<<endl;
 	if (Root==NULL){
 		throw string("ERROR(LEFT):Tree is empty");
 	}
@@ -324,6 +331,7 @@ int Tree::left(int i){
  * returns right value
  */
 int Tree::right(int i){
+	cout<<"right"<<endl;
 	if (Root==NULL){
 		throw string("ERROR(RIGHT):Tree is empty");
 	}
@@ -341,6 +349,7 @@ int Tree::right(int i){
  * print tree
  */
 void Tree::print(){
+	cout<<"print:"<<endl;
 	if(Root != NULL){
 		Root->printNode(Root);
 		cout<<""<<endl;
