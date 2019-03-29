@@ -16,17 +16,24 @@ Node::Node(int k, Node* n){
 	r=NULL;
 	p=n;
 }
-/**
+/**1
  * Destractor
  */ 
 Node::~Node(){
-	delete(l);
-	l=NULL;
-	delete(r);
-	r=NULL;
 	p=NULL;
+	delete l;
+	l=NULL;
+	delete r;
+	r=NULL;
+
 	// delete(p);
 }
+// /**
+//  * node recursive removal
+//  */ 
+// Node::deleteNode(Node* n, int i){
+
+// }
 
 /**
  * search i value as Recurtion
@@ -68,7 +75,7 @@ void Node::printNode(Node* n){
 		printNode(n->l);
 	} 
 	if(n!=NULL){
-		std::cout<<"["<<n->key<<"]"<<std::endl;
+		std::cout<<"["<<n->key<<"]";
 	}
 	if(n->r!=NULL){
 		printNode(n->r);
@@ -125,6 +132,7 @@ Tree& Tree::insert(int i){
  * if doesnt exits, throws error
  */ 
 void Tree::remove(int i){
+	cout<<"remove "<<i<<endl;
 	if (Root == NULL || Root->size()==0){
 		throw string("ERROR(REMOVE):Tree is Empty");
 		return;
@@ -137,53 +145,92 @@ void Tree::remove(int i){
 	}
 	// tNode->key==i
 	else{
-		if(tNode==Root){
-			// cout<<"here "<<i<<endl;
-			delete(Root);
-			Root=NULL;
-			return;
-		}
-		Node* cNode;
-		//tNode switch with right side
-		if (tNode->r!=NULL){
-			cNode = tNode->r->search(i);
-			tNode->key = cNode->key;
-			if(cNode->p==tNode){
-				cNode->p->r=cNode->r;
-				cNode->r=NULL;
-			}else{
-				cNode->p->l=NULL;	
+		if (tNode->l==NULL && tNode->r==NULL){//leaf
+			Node* pNode = tNode->p;
+			if (pNode==tNode){//leaf is Root
+				delete(Root);
+				Root=NULL;
 			}
-			
-			delete(cNode);
-		}
-		//tNode switch with left side
-		else{
-			if(tNode->l!=NULL){
-			cNode = tNode->l->search(i);
-			tNode->key = cNode->key;
-			if(cNode->p==tNode){
-				cNode->p->l=cNode->l;
-				cNode->l=NULL;
-			}else{
-				cNode->p->r=NULL;	
-			}
-			// cout<<cNode->key<<"+"<<cNode->l<<"+"<<cNode->r<<"+"<<cNode->p<<endl;
-			delete(cNode);
-			}
-			//tNode is a leaf
-			else
-			{
-				if(tNode->p->r==tNode){
-					tNode->p->r=NULL;
-				}
-				else{
-					tNode->p->l=NULL;
-					
-				}
+			else{
+				pNode->l==tNode ? pNode->l=NULL : pNode->r=NULL;
 				delete(tNode);
 			}
-			
+			return;
+		}//end_if leaf
+		else{//not leaf
+			Node* A=NULL;
+			Node* B=NULL;
+			Node* C=NULL;
+			Node* E=NULL;
+			Node* F=NULL;
+			//A=tNode parent,B=C->p, C=Node to swap with tNode, E=tNode->l,  F= C child if C isnt leaf.
+			A = tNode->p;
+			// E = tNode->l;
+			tNode->r!=NULL ? C=tNode->r->search(i) : C=tNode->l->search(i);
+			B = C->p;
+			if(C->l==NULL && C->r==NULL){//C is leaf
+				B->l==C ? B->l=NULL : B->r=NULL;
+				tNode->key=C->key;
+				delete(C);
+				return;
+			}
+			if (A==tNode){//tNode is root and isnt leaf
+				if(C->l==NULL){
+					C->l=tNode->l;
+					tNode->r->p=Root;
+					Root=tNode->r;
+				}
+				else{
+					C->r=tNode->r;
+					tNode->l->p=Root;
+					Root=tNode->l;
+				}
+				tNode->l=NULL;
+				tNode->r=NULL;
+				delete(tNode);
+				return;
+			}
+			else{//C isnt leaf nor root
+				if(B==tNode){//tNode is C->p
+					A->l==tNode ? A->l=C : A->r=C;
+					C->p=A;
+					if(C->l==NULL){
+						C->l=E;
+						E==NULL ? 0 : E->p=C;
+					}
+					else{
+						C->r=E;
+						E==NULL ? 0 : E->p=C;
+					}
+					tNode->l=NULL;
+					tNode->r=NULL;
+					tNode->p=NULL;
+					delete(tNode);
+					return;
+				}
+				if(C->l==NULL){
+					E = tNode->l;
+					F = C->r;
+					C->l=E;
+					C->r=B;
+					B->l=F;
+				}
+				else{
+					E = tNode->r;
+					F = C->l;
+					C->r=E;
+					C->l=B;
+					B->r=F;
+				}
+				A->l==tNode ? A->l=C : A->r=C;
+				C->p=A;
+				E!=NULL? E->p=C : 0 ;
+				F->p=B;
+				B->p=C;
+				cout<<C->key<<endl;
+				delete(tNode);
+				return;
+			}
 		}
 	}
 }
@@ -288,6 +335,7 @@ int Tree::right(int i){
 void Tree::print(){
 	if(Root != NULL){
 		Root->printNode(Root);
+		cout<<""<<endl;
 	}
 
 }
