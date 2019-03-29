@@ -129,6 +129,14 @@ Tree& Tree::insert(int i){
 	}
 	return *this;
 }
+
+void removeNode(Node* tNode){
+	tNode->l=NULL;
+	tNode->r=NULL;
+	tNode->p=NULL;
+	delete(tNode);
+}
+
 /**
  * removes node with i value
  * if doesnt exits, throws error
@@ -153,12 +161,12 @@ void Tree::remove(int i){
 		if (tNode->l==NULL && tNode->r==NULL){//leaf
 			Node* pNode = tNode->p;
 			if (pNode==tNode){//leaf is Root
-				delete(Root);
+				removeNode(Root);
 				Root=NULL;
 			}
 			else{
 				pNode->l==tNode ? pNode->l=NULL : pNode->r=NULL;
-				delete(tNode);
+				removeNode(tNode);
 			}
 			// cout<<"Removed"<<endl;
 			return;
@@ -184,17 +192,15 @@ void Tree::remove(int i){
 			if (A==tNode){//tNode is root and isnt leaf
 				if(C->l==NULL){
 					C->l=tNode->l;
-					tNode->r->p=Root;
 					Root=tNode->r;
-				}
+					tNode->r->p=Root;
+					}
 				else{
 					C->r=tNode->r;
-					tNode->l->p=Root;
 					Root=tNode->l;
-				}
-				tNode->l=NULL;
-				tNode->r=NULL;
-				delete(tNode);
+					tNode->l->p=Root;
+					}
+				removeNode(tNode);
 				// cout<<"Removed"<<endl;
 				return;
 			}
@@ -210,10 +216,7 @@ void Tree::remove(int i){
 						C->r=E;
 						E==NULL ? 0 : E->p=C;
 					}
-					tNode->l=NULL;
-					tNode->r=NULL;
-					tNode->p=NULL;
-					delete(tNode);
+					removeNode(tNode);
 					// cout<<"Removed"<<endl;
 					return;
 				}
@@ -237,7 +240,7 @@ void Tree::remove(int i){
 				F->p=B;
 				B->p=C;
 				// cout<<C->key<<endl;
-				delete(tNode);
+				removeNode(tNode);
 				// cout<<"Removed"<<endl;
 				return;
 			}
