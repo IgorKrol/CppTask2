@@ -299,7 +299,7 @@ int Tree::parent(int i){
 	Node* tNode = this->search(i);
 	if (tNode->key==i){
 		if(tNode->p==NULL){
-			throw string("ERROR(PARENT):Integer "+to_string(i)+" doesnt exists"); 
+			throw string("ERROR(PARENT):Integer "+to_string(i)+" doesnt have parent"); 
 		}
 		else{
 			return tNode->p->key;
@@ -320,6 +320,9 @@ int Tree::left(int i){
 	}
 	Node* tNode = this->search(i);
 	if (tNode->key==i){
+		if (tNode->r==NULL){
+			throw string("ERROR(LEFT):Integer "+to_string(i)+" doesnt have left");
+		}
 		return tNode->l->key;
 	}
 	else{
@@ -331,13 +334,16 @@ int Tree::left(int i){
  * returns right value
  */
 int Tree::right(int i){
-	cout<<"right"<<i<<endl;
+	cout<<"right"<<i<<	endl;
 	if (Root==NULL){
 		throw string("ERROR(RIGHT):Tree is empty");
 	}
 	Node* tNode = this->search(i);
 
 	if (tNode->key==i){
+		if (tNode->r==NULL){
+			throw string("ERROR(RIGHT):Integer "+to_string(i)+" doesnt have right");
+		}
 		return tNode->r->key;
 	}
 	else{
