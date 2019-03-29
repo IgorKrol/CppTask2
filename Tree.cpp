@@ -319,7 +319,7 @@ int Tree::left(int i){
 	}
 	Node* tNode = this->search(i);
 	if (tNode->key==i){
-		if (tNode->r==NULL){
+		if (tNode->l==NULL){
 			throw string("ERROR(LEFT):Integer "+to_string(i)+" doesnt have left");
 		}
 		return tNode->l->key;
