@@ -41,7 +41,7 @@ Node::~Node(){
  * if doesnt exist returns parent node for i
  * */
 Node* Node::search(int i){
-	cout<<"search "<<i<<endl;
+	// cout<<"search "<<i<<endl;
 	Node* tNode = this;
 	if (tNode->key==i){
 		return tNode;
@@ -104,7 +104,7 @@ Node* Tree::search(int i){
 
 /* this function inserts int i ass data to BST, if i exists, error will accure */
 Tree& Tree::insert(int i){
-	cout<<"insert "<<i<<endl;
+	// cout<<"insert "<<i<<endl;
 	if (Root == NULL){
 
 		Root = new Node(i);
@@ -135,17 +135,17 @@ Tree& Tree::insert(int i){
  */ 
 void Tree::remove(int i){
 	print();
-	cout<<"remove "<<i<<endl;
+	// cout<<"remove "<<i<<endl;
 	if (Root == NULL || Root->size()==0){
 		throw string("ERROR(REMOVE):Tree is Empty");
-		cout<<"Removed"<<endl;
+		// cout<<"Removed"<<endl;
 		return;
 	}
 	Node* tNode = this->search(i);
 	// didnt find i
 	if (tNode->key!=i){
 		throw string("ERROR(REMOVE):Integer "+to_string(i)+" doesnt exists");
-		cout<<"Removed"<<endl;
+		// cout<<"Removed"<<endl;
 		return;
 	}
 	// tNode->key==i
@@ -160,7 +160,7 @@ void Tree::remove(int i){
 				pNode->l==tNode ? pNode->l=NULL : pNode->r=NULL;
 				delete(tNode);
 			}
-			cout<<"Removed"<<endl;
+			// cout<<"Removed"<<endl;
 			return;
 		}//end_if leaf
 		else{//not leaf
@@ -178,7 +178,7 @@ void Tree::remove(int i){
 				B->l==C ? B->l=NULL : B->r=NULL;
 				tNode->key=C->key;
 				delete(C);
-				cout<<"Removed"<<endl;
+				// cout<<"Removed"<<endl;
 				return;
 			}
 			if (A==tNode){//tNode is root and isnt leaf
@@ -195,7 +195,7 @@ void Tree::remove(int i){
 				tNode->l=NULL;
 				tNode->r=NULL;
 				delete(tNode);
-				cout<<"Removed"<<endl;
+				// cout<<"Removed"<<endl;
 				return;
 			}
 			else{//C isnt leaf nor root
@@ -214,7 +214,7 @@ void Tree::remove(int i){
 					tNode->r=NULL;
 					tNode->p=NULL;
 					delete(tNode);
-					cout<<"Removed"<<endl;
+					// cout<<"Removed"<<endl;
 					return;
 				}
 				if(C->l==NULL){
@@ -236,9 +236,9 @@ void Tree::remove(int i){
 				E!=NULL? E->p=C : 0 ;
 				F->p=B;
 				B->p=C;
-				cout<<C->key<<endl;
+				// cout<<C->key<<endl;
 				delete(tNode);
-				cout<<"Removed"<<endl;
+				// cout<<"Removed"<<endl;
 				return;
 			}
 		}
@@ -248,7 +248,7 @@ void Tree::remove(int i){
  * returns tree size
  */ 
 int Tree::size(){ 
-	cout<<"size"<<endl;
+	// cout<<"size"<<endl;
 	if (this->Root==NULL){
 		return 0;
 	}
@@ -259,7 +259,7 @@ int Tree::size(){
  * checks if tree contains value i
  */ 
 bool Tree::contains(int i){
-	cout<<"contains "<<i<<endl;
+	// cout<<"contains "<<i<<endl;
 	if(Root==NULL){
 		return false;
 	}
@@ -275,7 +275,7 @@ bool Tree::contains(int i){
  * returns root value
  */
 int Tree::root(){
-	cout<<"root "<<endl;
+	// cout<<"root "<<endl;
 	if (Root==NULL){
 		throw string("ERROR(ROOT):Tree is empty"); 
 	}
@@ -291,7 +291,7 @@ int Tree::root(){
  * returns parent value
  */
 int Tree::parent(int i){
-	cout<<"parent"<<i<<endl;
+	// cout<<"parent"<<i<<endl;
 	if (Root==NULL){
 		throw string("ERROR(PARENT):Tree is empty"); 
 	}
@@ -313,7 +313,7 @@ int Tree::parent(int i){
  * returns left value
  */
 int Tree::left(int i){
-	cout<<"left"<<i<<endl;
+	// cout<<"left"<<i<<endl;
 	if (Root==NULL){
 		throw string("ERROR(LEFT):Tree is empty");
 	}
@@ -333,7 +333,7 @@ int Tree::left(int i){
  * returns right value
  */
 int Tree::right(int i){
-	cout<<"right"<<i<<	endl;
+	// cout<<"right"<<i<<	endl;
 	if (Root==NULL){
 		throw string("ERROR(RIGHT):Tree is empty");
 	}
@@ -354,7 +354,7 @@ int Tree::right(int i){
  * print tree
  */
 void Tree::print(){
-	cout<<"print:"<<endl;
+	// cout<<"print:"<<endl;
 	if(Root != NULL){
 		Root->printNode(Root);
 		cout<<""<<endl;
